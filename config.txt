@@ -1,0 +1,2 @@
+[TOKEN]
+telegram_bot_token = 'Your token'
