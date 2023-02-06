@@ -1,0 +1,27 @@
+[ENG]
+main_menu = Hello {name}, I'm HerkkuMarsu and I'm responsible for the accounts of snack service. Choose one of below options.
+buy = How much money do you want to spend (max. 20 euros)? Look at the price of the product you want on the refrigerator door and enter the amount of money you spend. Please use a dot (.) and a maximum of two (2) decimal. Please note that your account must remain positive after buying.
+add = How much money do you want to add into you account (max. 20 euros)? Drop as many euros into the blue cash box as you think you will need in the future and tell me this amount of money. Please use a dot (.) and a maximum of two (2) decimal.
+check = You have {amount} euros.
+sleep = I got to sleep. If you want to wake me up, send me start command. ZZZZZZZZZZZ...
+cancel = Something went wrong. Did you use a dot (.) in decimal numbers? Did you try to add or spend more than 20 euros? Choose from the functions below.
+no_money = You don't have enough money. You still need {-amount} euros. ADD MONEY IN YOUR ACCOUNT BEFORE BUYING!
+used_amount = You used {message} euros! You currently have {amount} euros in your account.
+added_amount = You added {message} euros to your account! You currently have {amount} euros in your account.
+commands_buy = Buy Snacks
+commands_Add = Add Money
+commands_check = Check Money
+
+[FIN]
+main_menu = Hei {name}, olen HerkkuMarsu ja vastaan namupalvelun tileistä.Valitse jokin alla olevista toiminnoista.
+buy = Kuinka paljon rahaa haluat käyttää (max. 20 euroa)? Katso jääkaapin ovesta haluamasi tuotteen hinta ja lähtä käyttämäsi rahasumma. Käytäthän desimaaleissa pistettä (.) ja enimmillää kahta (2) desimaalia. Huomaathan, että tilisi ei saa mennä miinukselle.
+add = Kuinka paljon haluat lisätä rahaa tilillesi (max. 20 euroa)? Tipauta siniseen kassalippaaseen niin monta euroa kuin uskot lähiaikoina tarvitsevasi ja kerro tämä rahasumma minulle. Käytäthän desimaaleissa pistettä (.) ja enimmillää kahta (2) desimaalia.
+check = Tililläsi on {amount} euroa.
+sleep = Menen nukkumaan. Jos haluat herättää minut, lähetä komento start. ZZZZZZZZZZZ...
+cancel = Jokin meni pieleen. Käytithän pistettä (.) desimaaliluvuissa? Koititko lisätä tai käyttää enemmän kuin 20 euroa. Valitse alla olevista toiminnoista.
+no_money = Sinulla ei ole tarpeeksi rahaa. Tarvitset vielä {-amount} euroa. LISÄÄ RAHAA TILILLESI ENNEN OSTOA!
+used_amount = Käytit {message} euroa! Tililläsi on tällä hetkellä {amount} euroa.
+added_amount = Lisäsit tilillesi {message} euroa! Tililläsi on tällä hetkellä {amount} euroa.
+commands_buy = Osta Herkkuja
+commands_Add = Lisää Rahaa
+commands_check = Tarkista kreditit

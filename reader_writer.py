@@ -11,7 +11,7 @@ def create_csv():
     if not exists("credits.csv"):
         f = open('credits.csv', 'w')
         writer = csv.writer(f)
-        writer.writerow(["name","id","money","latest_change","latest_change_time"])
+        writer.writerow(["name","id","money","latest_change","latest_change_time", "lang"])
         f.close()
 
 def add_old_credits(username, user_id):
@@ -22,7 +22,6 @@ def add_old_credits(username, user_id):
 
     df = pd.read_csv("credits.csv")
     if username in df["name"].values: #and pd.isnull(df.loc[df['username']== username, "id"])
-        print("jee")
         df.loc[df["name"]==username, "latest_change_time"] = datetime.now()
         df.loc[df["name"]==username, "id"] = user_id
         df.loc[df["name"]==username, "latest_change"] = "add user"
@@ -50,7 +49,7 @@ def add_user(username, id):
     '''
     Adds user into credits.csv file
     '''
-    data = {"name": [username],"id": [id],"money": [0], "latest_change": ["add new user"], "latest_change_time": [datetime.now()]}
+    data = {"name": [username],"id": [id],"money": [0], "latest_change": ["add new user"], "latest_change_time": [datetime.now()], "lang": ["FIN"]}
     df = pd.DataFrame(data)
     df.to_csv("credits.csv", mode='a', index=False, header=False)
 
@@ -99,3 +98,15 @@ def check_money(user_id):
     '''
     df = pd.read_csv("credits.csv")
     return float(df.loc[df['id']==user_id, "money"])
+
+def set_language(user_id, language):
+    df = pd.read_csv("credits.csv")
+    df.loc[df["id"]==user_id, "lang"] = language
+    df.to_csv("credits.csv", index=False)
+
+def read_language(user_id):
+    df = pd.read_csv("credits.csv")
+    if (df.loc[df["id"]==user_id, "lang"].squeeze() == None):
+        set_language(user_id, "FIN")
+    language = df.loc[df["id"]==user_id, "lang"].squeeze()
+    return language
