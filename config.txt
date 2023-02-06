@@ -1,2 +1,5 @@
 [TOKEN]
-telegram_bot_token = 'Your token'
+telegram_bot_token = "your token"
+
+[PASSWORD]
+bot_password = "bot's password"

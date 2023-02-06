@@ -8,25 +8,69 @@ automaticly form config.txt file
 
 import reader_writer
 import configparser
-from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
+from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove, Chat
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler, filters, ConversationHandler
 
-CHOOSE, TREATS, CREDITS, SLEEP = range(4)
-TOKEN = 0
+CHOOSE, TREATS, CREDITS, SLEEP, CHECK_USER = range(5)
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def check_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    '''
+    Check if user id exists in csv. If not ask password. After correct password,
+    check if there is assigned credits for user. Upadate credits it true.
+    '''
+    message =  update.message.text
+    name = update.message.from_user.first_name
+    username = update.message.from_user.username
+    id = update.message.from_user.id
+
+    config = configparser.ConfigParser()
+    config.read('config.txt')
+    PASSWORD = config["PASSWORD"]["bot_password"]
+
+    if message == PASSWORD:
+        if not reader_writer.add_old_credits(username, id):
+            reader_writer.add_user(username, id)
+
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text=f"Hei {name},\nolen HerkkuMarsu ja vastaan namupalvelun tileistä.\nValitse jokin alla olevista toiminnoista.",
+            reply_markup=main_menu_keyboard()
+        )
+
+        return CHOOSE
+    else:
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text=f"Väärä salasana",
+        )
+        return ConversationHandler.END
+
+
+async def awake(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     Starts the ConversationHandler.
     Returns the state CHOOSE, which activates the function choose
     '''
     name = update.message.from_user.first_name
-    await context.bot.send_message(
-        chat_id=update.effective_chat.id,
-        text=f"Hei {name},\nolen HerkkuMarsu ja vastaan namupalvelun tileistä.\nValitse jokin alla olevista toiminnoista.",
-        reply_markup=main_menu_keyboard()
-    )
+    id = update.message.from_user.id
 
-    return CHOOSE
+    if reader_writer.find_user(id):
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text=f"Hei {name},\nolen HerkkuMarsu ja vastaan namupalvelun tileistä.\nValitse jokin alla olevista toiminnoista.",
+            reply_markup=main_menu_keyboard()
+        )
+
+        return CHOOSE
+
+    else:
+        await context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=f"Anna salasana: ",
+        )
+
+        return CHECK_USER
+
 
 async def choose(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
@@ -35,9 +79,7 @@ async def choose(update: Update, context: ContextTypes.DEFAULT_TYPE):
     The function returns state based on the message sent to bot.
     '''
     message =  update.message.text 
-    user = update.message.from_user.username
-    if reader_writer.find_user(user) == False:
-        reader_writer.add_user(user)
+    id = update.message.from_user.id
 
     if message == "Osta Herkkuja":
         await context.bot.send_message(
@@ -56,7 +98,7 @@ async def choose(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return CREDITS
 
     elif message == "Tarkista kreditit":
-        amount = reader_writer.check_money(user)
+        amount = reader_writer.check_money(id)
         await context.bot.send_message(
             chat_id=update.effective_chat.id,
             text=f"Tililläsi on {amount} euroa.",
@@ -81,7 +123,9 @@ async def buy(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     message =  update.message.text
     user = update.message.from_user.username
-    amount = reader_writer.use_money(user, message)
+    id = update.message.from_user.id
+
+    amount = reader_writer.use_money(user, id, message)
     if amount < 0:
         await context.bot.send_message(
             chat_id=update.effective_chat.id,
@@ -105,7 +149,9 @@ async def add_credits(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     message =  update.message.text
     user = update.message.from_user.username
-    amount = reader_writer.add_money(user, message)
+    id = update.message.from_user.id
+    amount = reader_writer.add_money(user, id, message)
+
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
         text= f"Lisäsit tilillesi {message} euroa! Tililläsi on tällä hetkellä {amount} euroa.",
@@ -145,6 +191,7 @@ def main():
     config = configparser.ConfigParser()
     config.read('config.txt')
     TOKEN = config["TOKEN"]["telegram_bot_token"]
+    reader_writer.create_csv()
 
     money_filter = filters.Regex("^(?:([2][0])(?:\.0)?|[1][0-9](?:\.([0-9]|[0-9][0,5]))?|[1-9](?:\.([0-9]|[0-9][0,5]))?|0?\.([0-9]|[0-9][0,5]))$") 
     application = ApplicationBuilder().token(TOKEN).build()
@@ -155,11 +202,13 @@ def main():
     # the choose-function is called
     #
     # If END is called, the conversationHander is closed
+
     conv_handler = ConversationHandler(
-                                        entry_points= [CommandHandler('start', start)],
+                                        entry_points= [CommandHandler('start', awake)],
                                         states={CHOOSE: [MessageHandler(filters.Regex("^(Osta Herkkuja|Lisää rahaa|Tarkista kreditit|END)$"), choose)],
                                                 TREATS: [MessageHandler(money_filter, buy)],
                                                 CREDITS: [MessageHandler(money_filter, add_credits)],
+                                                CHECK_USER: [MessageHandler(filters.TEXT, check_user)]
                                         },
                                         fallbacks= [MessageHandler(filters.TEXT, cancel)]
                                     )   
