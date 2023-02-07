@@ -1,16 +1,16 @@
 [ENG]
-main_menu = Hello {name}, I'm HerkkuMarsu and I'm responsible for the accounts of snack service. Choose one of below options.
-buy = How much money do you want to spend (max. 20 euros)? Look at the price of the product you want on the refrigerator door and enter the amount of money you spend. Please use a dot (.) and a maximum of two (2) decimal. Please note that your account must remain positive after buying.
-add = How much money do you want to add into you account (max. 20 euros)? Drop as many euros into the blue cash box as you think you will need in the future and tell me this amount of money. Please use a dot (.) and a maximum of two (2) decimal.
+main_menu = Hello {name}, I'm HerkkuMarsu and I'm responsible for the accounts of the snack service. Choose one of the options below.
+buy = How much money do you want to spend (max. 20 euros)? Look at the price of the product you want on the refrigerator door and enter the amount of money you want to spend. Please use a dot (.) and a maximum of two (2) decimals. Please note that your account balance must remain positive after buying.
+add = How much money do you want to add into your account (max. 20 euros)? Drop as many euros into the blue cash box as you think you will need in the future and tell me this amount of money. Please use a dot (.) and a maximum of two (2) decimals.
 check = You have {amount} euros.
-sleep = I got to sleep. If you want to wake me up, send me start command. ZZZZZZZZZZZ...
-cancel = Something went wrong. Did you use a dot (.) in decimal numbers? Did you try to add or spend more than 20 euros? Choose from the functions below.
-no_money = You don't have enough money. You still need {-amount} euros. ADD MONEY IN YOUR ACCOUNT BEFORE BUYING!
+sleep = I'm going to sleep. If you want to wake me up, send the start command. ZZZZZZZZZZZ...
+cancel = Something went wrong. Did you use a dot (.) in the decimal numbers? Did you try to add or spend more than 20 euros? Choose from the functions below.
+no_money = You don't have enough money. You still need {-amount} euros. ADD MONEY IN TO YOUR ACCOUNT BEFORE BUYING!
 used_amount = You used {message} euros! You currently have {amount} euros in your account.
 added_amount = You added {message} euros to your account! You currently have {amount} euros in your account.
 commands_buy = Buy Snacks
 commands_Add = Add Money
-commands_check = Check Money
+commands_check = Check Balance
 
 [FIN]
 main_menu = Hei {name}, olen HerkkuMarsu ja vastaan namupalvelun tileistä.Valitse jokin alla olevista toiminnoista.
