@@ -182,7 +182,7 @@ async def buy(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if amount < 0:
         await context.bot.send_message(
             chat_id=update.effective_chat.id,
-            text= no_money_text(id).format(amount = -amount),
+            text= no_money_text(id).format(amount = -1*amount),
             reply_markup=main_menu_keyboard(id)
         )
     else:
