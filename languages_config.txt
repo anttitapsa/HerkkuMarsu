@@ -24,4 +24,4 @@ used_amount = Käytit {message} euroa! Tililläsi on tällä hetkellä {amount} 
 added_amount = Lisäsit tilillesi {message} euroa! Tililläsi on tällä hetkellä {amount} euroa.
 commands_buy = Osta Herkkuja
 commands_Add = Lisää Rahaa
-commands_check = Tarkista kreditit
+commands_check = Tarkista Kreditit

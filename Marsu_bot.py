@@ -134,7 +134,7 @@ async def choose(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         return TREATS
 
-    elif message == "Lisää rahaa" or message == "Add Money":
+    elif message == "Lisää Rahaa" or message == "Add Money":
         await context.bot.send_message(
             chat_id=update.effective_chat.id,
             text=add_text(id),
@@ -142,7 +142,7 @@ async def choose(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         return CREDITS
 
-    elif message == "Tarkista kreditit" or message == "Check Money":
+    elif message == "Tarkista Kreditit" or message == "Check Balance":
         amount = reader_writer.check_money(id)
         await context.bot.send_message(
             chat_id=update.effective_chat.id,
@@ -321,7 +321,7 @@ def main():
     
 
     conv_handler = ConversationHandler( entry_points= [CommandHandler('start', awake)],
-                                        states={CHOOSE: [MessageHandler(filters.Regex("^(Osta Herkkuja|Lisää rahaa|Tarkista kreditit|Change Language|END|Buy Snacks|Add Money|Check Money)$"), choose)],
+                                        states={CHOOSE: [MessageHandler(filters.Regex("^(Osta Herkkuja|Lisää Rahaa|Tarkista Kreditit|Change Language|END|Buy Snacks|Add Money|Check Balance)$"), choose)],
                                                 TREATS: [MessageHandler(money_filter, buy)],
                                                 CREDITS: [MessageHandler(money_filter, add_credits)],
                                                 CHECK_USER: [MessageHandler(filters.TEXT, check_user)],
