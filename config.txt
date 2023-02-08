@@ -1,5 +1,5 @@
 [TOKEN]
-telegram_bot_token = 6078949200:AAGmPexh7qGmxJEpjm-ZqjRv0d7pRGaex7c
+telegram_bot_token = "your token"
 
 [PASSWORD]
-bot_password = A
+bot_password = "bot's password"
